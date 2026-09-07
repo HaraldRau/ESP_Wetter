@@ -18,4 +18,5 @@ void DS18Innen()//Daten vom DS18Innen abrufen
   {
   temp_i = Innen.getTempCByIndex(0)-2;
   }
+  temp_i = temp_i - 1.5;
 }
