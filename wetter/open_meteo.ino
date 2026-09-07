@@ -23,8 +23,10 @@ void WetterOpen()//Daten von Open Meteo abrufen
       deserializeJson(daten, payload);
 
       // Daten auf die Variablen aufteilen
+      temp_o = daten["current"]["temperature_2m"];
       hum_o = daten["current"]["relative_humidity_2m"];
       wind_o = daten["current"]["wind_speed_10m"];
+      druck = daten["current"]["surface_pressure"];
 
       wetter_0 = daten["daily"]["weathercode"][0];
       wetter_1 = daten["daily"]["weathercode"][1];
@@ -84,9 +86,8 @@ void WetterOpen()//Daten von Open Meteo abrufen
           fehler_ID = 0;
         }
       }   
-      Serial.printf("HTTP Fehler: %d\n ", httpCode);
-      Serial.println(http.errorToString(httpCode));
-      delay(1000);      
+      Serial.printf("HTTP Fehler: %d\n", httpCode);
+      delay(1000);     
     }
   }
 
@@ -94,7 +95,7 @@ void WetterOpen()//Daten von Open Meteo abrufen
 
   if (httpCode != HTTP_CODE_OK)
   {
-    Serial.println("Open Meteo nach 5 Versuchen nicht erreichbar!");
+    Serial.println("Open Meteo nicht erreichbar ...");
     // Hier Fehlermeldung auf dem Display
     fehlercode[fehler_ID]=2;
     if (fehler_ID < 99)
@@ -105,34 +106,6 @@ void WetterOpen()//Daten von Open Meteo abrufen
       {
         fehler_ID = 0;
       }
+    WLANCheck();
   }
-}
-int Wind(float kmh)//Umrechnung von Wind km/h in Windstärke
-{
-  if (kmh < 1)
-    return 0;
-  else if (kmh < 6)
-    return 1;
-  else if (kmh < 12)
-    return 2;
-  else if (kmh < 20)
-    return 3;
-  else if (kmh < 29)
-    return 4;
-  else if (kmh < 39)
-    return 5;
-  else if (kmh < 50)
-    return 6;
-  else if (kmh < 62)
-    return 7;
-  else if (kmh < 75)
-    return 8;
-  else if (kmh < 89)
-    return 9;
-  else if (kmh < 103)
-    return 10;
-  else if (kmh < 118)
-    return 11;
-  else
-    return 12;
 }
