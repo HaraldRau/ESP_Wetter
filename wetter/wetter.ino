@@ -163,7 +163,7 @@ void loop()
   DS18Innen();
   delay(1000);
   WetterOpen();
-  MinMax();
+  WetterPlus();
   delay(5000);
   tft.fillScreen(TFT_BLACK);
   Bericht();
