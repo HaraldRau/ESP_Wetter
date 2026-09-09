@@ -1,4 +1,4 @@
-void MinMax()
+void WetterPlus()
 {
   tft.setTextFont(4);
   tft.setTextSize(1);
